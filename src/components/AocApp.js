@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 
 const ShowList = (props) => {
     let output = [];
-    for (let i = 0; i < 25; i++) {
+    for (let i = 1; i <= 25; i++) {
         output.push(<div className="text-lg hover:bg-gray-700 hover:text-white" id={i}
             onClick={(e) => {
                 props.setSelectedDay(e.target.id)
                 props.setShowSelectedDay(false)
             }}>
-            Day {i + 1}
+            Day {i}
         </div>
         )
     }
