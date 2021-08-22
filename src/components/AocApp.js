@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Transition } from '@headlessui/react'
+import dayFunctions from './dayFunctions';
+import AocTestCode from './AocTestCode';
+import Button from './Button';
 
 const ShowList = (props) => {
     let output = [];
@@ -20,9 +23,16 @@ const ShowList = (props) => {
     return output
 }
 
+class Day {
+    constructor(link, solution1, solution2) {
+        this.link = link
+        this.solution1 = solution1
+        this.solution2 = solution2
+    }
+}
+
 const Days = [
-    '1',
-    '2',
+    new Day('https://adventofcode.com/2020/day/1', dayFunctions.day1p1, dayFunctions.day1p2),
     null,
     null,
     null,
@@ -39,6 +49,7 @@ const Days = [
     null,
     null,
     null,
+    new Day('https://adventofcode.com/2020/day/18', dayFunctions.day18p1, null),
     null,
     null,
     null,
@@ -48,9 +59,17 @@ const Days = [
     null
 ]
 
+
+
 const AocApp = () => {
     const [showSelectedDay, setShowSelectedDay] = useState(false)
-    const [selectedDay, setSelectedDay] = useState(null)
+    const [selectedDay, setSelectedDay] = useState(1)
+    const [solution, setSolution] = useState(null)
+    const [input, setInput] = useState(AocTestCode[selectedDay])
+    useEffect(() => { 
+        setSolution(null)
+        setInput(AocTestCode[selectedDay])
+     }, [selectedDay])
     return (
         <div className=" w-screen h-[calc(100vh-4rem)] sm:h-screen flex items-center sm:-mt-16">
             {showSelectedDay ? (
@@ -64,23 +83,22 @@ const AocApp = () => {
                         ) : (
                             <>
                                 <p>Day {selectedDay}</p>
-                                <p>Solution: </p>
+                                <p>Solution: {solution}</p>
                             </>
                         )
                     }
                 </div>
                 <div className="h-full w-full">
-                    <textarea className="w-full h-full resize-none rounded-lg focus:outline-none p-[10px] focus:border-2 focus:border-gray-700" />
+                    <textarea className="w-full h-full resize-none rounded-lg focus:outline-none p-[10px] focus:border-2 focus:border-gray-700"
+                        onChange={(input) => setInput(input.target.value)}
+                        value={input}
+                    />
                 </div>
 
                 <div className="w-full  justify-between justify-self-end self-end flex flex-col sm:flex-row gap-[10px] sm:gap-[50px]">
-                    <div className="flex h-10 w-full border border-gray-700 rounded-md justify-center items-center hover:bg-gray-700 hover:text-gray-200 ">Part 1</div>
-                    <div className="flex h-10 w-full border border-gray-700 rounded-md justify-center items-center hover:bg-gray-700 hover:text-gray-200 ">Part 2</div>
-                    <div className="flex h-10 w-full border border-gray-700 rounded-md justify-center items-center hover:bg-gray-700 hover:text-gray-200 "
-                        onClick={() => setShowSelectedDay(!showSelectedDay)}
-                    >
-                        {selectedDay == null ? 'Click to pick a day' : 'Day ' + selectedDay}
-                    </div>
+                    <Button function={() => setSolution(Days[selectedDay - 1].solution1(input))} value="Part 1" />
+                    <Button function={() => setSolution(Days[selectedDay - 1].solution2(input))} value="Part 2" disabled={Days[selectedDay - 1].solution2 == null} />
+                    <Button function={() => setShowSelectedDay(!showSelectedDay)} value='Change Day' />
                     <Transition
                         className="z-30 absolute right-4 bottom-4 max-h-[calc(80vh-2rem)] overflow-x-hidden overflow-y-auto border-[2px] scrollbar-hide border-gray-700 rounded-xl w-72"
                         show={showSelectedDay}
