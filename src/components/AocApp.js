@@ -9,7 +9,7 @@ const ShowList = (props) => {
     Days.forEach((day, i) => {
         output.push(
             <div
-                className={`${day == null ? 'bg-gray-200' : ' bg-gray-100 hover:bg-gray-700 hover:text-white'} text-lg  mx-[-2px]  cursor-pointer border-b border-gray-700 ${i == 0 ? 'rounded-t-xl mt-[-2px]' : i == 24 ? 'rounded-b-xl mb-[-2px]' : null}`} id={i + 1} key={i + 1}
+                className={`${day === null ? 'bg-gray-200' : ' bg-gray-100 hover:bg-gray-700 hover:text-white'} text-lg  mx-[-2px]  cursor-pointer border-b border-gray-700 ${i === 0 ? 'rounded-t-xl mt-[-2px]' : i === 24 ? 'rounded-b-xl mb-[-2px]' : null}`} id={i + 1} key={i + 1}
                 onClick={(e) => {
                     if (day !== null) {
                         props.setSelectedDay(e.target.id)
@@ -63,13 +63,13 @@ const Days = [
 
 const AocApp = () => {
     const [showSelectedDay, setShowSelectedDay] = useState(false)
-    const [selectedDay, setSelectedDay] = useState(1)
+    const [selectedDay, setSelectedDay] = useState(18)
     const [solution, setSolution] = useState(null)
-    const [input, setInput] = useState(AocTestCode[selectedDay])
-    useEffect(() => { 
+    const [input, setInput] = useState('')
+    useEffect(() => {
         setSolution(null)
-        setInput(AocTestCode[selectedDay])
-     }, [selectedDay])
+        setInput('1 + (2 * 3) + (4 * (5 + 6))')
+    }, [selectedDay])
     return (
         <div className=" w-screen h-[calc(100vh-4rem)] sm:h-screen flex items-center sm:-mt-16">
             {showSelectedDay ? (
