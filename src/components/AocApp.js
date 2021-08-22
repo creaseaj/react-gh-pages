@@ -32,7 +32,7 @@ class Day {
 }
 
 const Days = [
-    new Day('https://adventofcode.com/2020/day/1', dayFunctions.day1p1, dayFunctions.day1p2),
+    new Day('https://adventofcode.com/2020/day/1', day1p1, day1p2),
     null,
     null,
     null,
@@ -49,7 +49,7 @@ const Days = [
     null,
     null,
     null,
-    new Day('https://adventofcode.com/2020/day/18', dayFunctions.day18p1, null),
+    new Day('https://adventofcode.com/2020/day/18', day18p1, null),
     null,
     null,
     null,
