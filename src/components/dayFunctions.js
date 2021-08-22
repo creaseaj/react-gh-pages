@@ -1,6 +1,6 @@
 // Day 1
 
-const day1p1 = (input) => {
+const day1p1 = (input = null) => {
     input = input.split('\n')
     for (var i = 0; i < input.length; i++) {
         for (var j = i; j < input.length; j++) {
@@ -32,39 +32,59 @@ const day18p1 = (input) => {
     input = input.split('\n')
     var runningTotal = 0
     for (var i = 0; i < input.length; i++) {
-        day18p1Runner(day18p1LineProcessor(input[i]))
-        //runningTotal += day18p1Runner(input[i])
+        console.log(day18p1Runner(day18p1LineProcessor(input[i])))
     }
-    console.log(runningTotal)
-
+    return runningTotal
 }
 
 const day18p1Runner = (input) => {
+    console.log(input)
+
     // find and solve brackets
     let arrOut = []
     let depth = 0;
-    input.forEach(char => {
+    let startIndexes = [0]
+    let endIndexes = []
+    input.forEach((char, index) => {
         if (char == '(') {
-
+            depth++;
+            if (depth === 1) {
+                startIndexes.push(index + 1)
+            }
+        }
+        else if (char == ')') {
+            depth--;
+            if (depth === 0) {
+                endIndexes.push(index)
+            }
         }
     })
+    console.log(startIndexes, endIndexes)
+    if (startIndexes.length > 1) {
+        arrOut = input
+    }
+    for (let i = startIndexes.length - 1; i >= 0; i--) {
+        day18p1Runner(input.slice(startIndexes[i], endIndexes[i]))
+        arrOut.push.apply(arrOut.slice(startIndexes[i - 1]]))
+        console.log(startIndexes[i], endIndexes[i])
+        console.log(input.slice(startIndexes[i], endIndexes[i]))
+    }
     // Assuming there are no brackets
     if (input.length == 1) {
         return input[0]
     }
     arrOut.push(String(solve(input.slice(0, 3))))
     arrOut.push.apply(arrOut, input.slice(3, input.length))
-    console.log(arrOut)
     return day18p1Runner(arrOut)
 }
 const solve = (input) => {
-    console.log('solving', input)
     switch (input[1]) {
         case '*':
             return parseInt(input[0]) * parseInt(input[2])
             break;
         case '+':
             return parseInt(input[0]) + parseInt(input[2])
+        default:
             break;
     }
     return '20'
@@ -79,9 +99,7 @@ const day18p1LineProcessor = (input) => {
     return arrOut
 }
 
-
-
-export default {
+export {
     day1p1,
     day1p2,
     day18p1

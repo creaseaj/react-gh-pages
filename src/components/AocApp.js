@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Transition } from '@headlessui/react'
-import dayFunctions from './dayFunctions';
+import dayFunctions, { day18p1, day1p1, day1p2 } from './dayFunctions';
 import AocTestCode from './AocTestCode';
 import Button from './Button';
 
