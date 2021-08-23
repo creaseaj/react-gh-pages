@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Transition } from '@headlessui/react'
 import dayFunctions, { day18p1, day1p1, day1p2 } from './dayFunctions';
 import AocTestCode from './AocTestCode';
@@ -66,6 +66,7 @@ const AocApp = () => {
     const [selectedDay, setSelectedDay] = useState(18)
     const [solution, setSolution] = useState(null)
     const [input, setInput] = useState('')
+    let changeDayButton = useRef(null)
     useEffect(() => {
         setSolution(null)
         setInput('1 + (2 * 3) + (4 * (5 + 6))')
@@ -78,7 +79,10 @@ const AocApp = () => {
         leaveFrom: "leaveFrom",
         leaveTo: "leaveTo"
       };
-    return (
+      useEffect(() => {
+        console.log('width', changeDayButton.current ? changeDayButton.current.offsetWidth : 0);
+      }, [changeDayButton]);
+      return (
         <div className=" w-screen h-[calc(100vh-4rem)] sm:h-screen flex items-center sm:-mt-16">
             {showSelectedDay ? (
                 <div className=" z-20 absolute right-0 bottom-0 top-0 left-0" onClick={() => setShowSelectedDay(!showSelectedDay)} />
@@ -106,9 +110,10 @@ const AocApp = () => {
                 <div className="w-full  justify-between justify-self-end self-end flex flex-col sm:flex-row gap-[10px] sm:gap-[50px]">
                     <Button function={() => setSolution(Days[selectedDay - 1].solution1(input))} value="Part 1" />
                     <Button function={() => setSolution(Days[selectedDay - 1].solution2(input))} value="Part 2" disabled={Days[selectedDay - 1].solution2 == null} />
-                    <Button function={() => setShowSelectedDay(!showSelectedDay)} value='Change Day' />
+                    <Button id="dayPick" function={() => setShowSelectedDay(!showSelectedDay)} value='Change Day'  ref={changeDayButton}/>
                     <Transition
-                        className="z-30 absolute right-4 bottom-4 max-h-[calc(80vh-2rem)] overflow-x-hidden overflow-y-auto border-[2px] scrollbar-hide border-gray-700 rounded-xl w-72"
+                        className="z-30 absolute right-4 bottom-4 max-h-[calc(80vh-2rem)] overflow-x-hidden overflow-y-auto border-[2px] scrollbar-hide border-gray-700 rounded-xl"
+                        style={{width: changeDayButton.current?.offsetWidth ?? 400 }}
                         show={showSelectedDay}
                         {...classNames}
                     >
