@@ -4,7 +4,7 @@ const day1p1 = (input = null) => {
     input = input.split('\n')
     for (var i = 0; i < input.length; i++) {
         for (var j = i; j < input.length; j++) {
-            if (Number.parseInt(input[i]) + Number.parseInt(input[j]) == 2020) {
+            if (Number.parseInt(input[i]) + Number.parseInt(input[j]) === 2020) {
                 return Number.parseInt(input[i]) * Number.parseInt(input[j])
 
             }
@@ -17,7 +17,7 @@ const day1p2 = (input) => {
     for (var i = 0; i < input.length; i++) {
         for (var j = i; j < input.length; j++) {
             for (var k = j; k < input.length; k++) {
-                if (Number.parseInt(input[i]) + Number.parseInt(input[j]) + Number.parseInt(input[k]) == 2020) {
+                if (Number.parseInt(input[i]) + Number.parseInt(input[j]) + Number.parseInt(input[k]) === 2020) {
                     return Number.parseInt(input[i]) * Number.parseInt(input[j]) * Number.parseInt(input[k])
                 }
             }
@@ -32,62 +32,66 @@ const day18p1 = (input) => {
     input = input.split('\n')
     var runningTotal = 0
     for (var i = 0; i < input.length; i++) {
-        console.log(day18p1Runner(day18p1LineProcessor(input[i])))
+        runningTotal += parseInt(day18p1Runner(day18p1LineProcessor(input[i])))
     }
     return runningTotal
 }
 
 const day18p1Runner = (input) => {
-    console.log(input)
-
     // find and solve brackets
     let arrOut = []
     let depth = 0;
-    let startIndexes = [0]
+    let startIndexes = []
     let endIndexes = []
     input.forEach((char, index) => {
-        if (char == '(') {
+        if (char === '(') {
             depth++;
             if (depth === 1) {
                 startIndexes.push(index + 1)
             }
         }
-        else if (char == ')') {
+        else if (char === ')') {
             depth--;
             if (depth === 0) {
                 endIndexes.push(index)
             }
         }
     })
-    console.log(startIndexes, endIndexes)
-    if (startIndexes.length > 1) {
-        arrOut = input
+    // Found location of brackets, now I need to solve the brackets and put the line back together
+    if (startIndexes.length > 0) {
+        arrOut.push.apply(arrOut, input.slice(0, startIndexes[0] - 1))
+        for (let i = 0; i < startIndexes.length; i++) {
+            arrOut.push(day18p1Runner(input.slice(startIndexes[i], endIndexes[i])))
+            arrOut.push.apply(arrOut, input.slice(endIndexes[i] + 1, startIndexes[i + 1] - 1))
+        }
+        arrOut.push.apply(arrOut, input.slice(endIndexes[endIndexes.length - 1] + 1, input.length))
     }
-    for (let i = startIndexes.length - 1; i >= 0; i--) {
-        day18p1Runner(input.slice(startIndexes[i], endIndexes[i]))
-        arrOut.push.apply(arrOut,arrOut.slice(0,startIndexes[i - 1]))
-        console.log(startIndexes[i], endIndexes[i])
-        console.log(input.slice(startIndexes[i], endIndexes[i]))
+    let copyOut = []
+    if (arrOut.length === 0) {
+        copyOut = input
+    } else {
+        copyOut = arrOut
     }
+    arrOut = []
     // Assuming there are no brackets
-    if (input.length == 1) {
-        return input[0]
+    if (copyOut.length === 1) {
+        return copyOut[0]
     }
-    arrOut.push(String(solve(input.slice(0, 3))))
-    arrOut.push.apply(arrOut, input.slice(3, input.length))
+    arrOut.push(String(solve(copyOut.slice(0, 3))))
+    if (copyOut.length > 3) {
+        arrOut.push.apply(arrOut, copyOut.slice(3, copyOut.length))
+    }
     return day18p1Runner(arrOut)
 }
 const solve = (input) => {
     switch (input[1]) {
         case '*':
             return parseInt(input[0]) * parseInt(input[2])
-            break;
         case '+':
             return parseInt(input[0]) + parseInt(input[2])
         default:
-            break;
+            return 0;
     }
-    return '20'
 }
 const day18p1LineProcessor = (input) => {
     let arrOut = []
