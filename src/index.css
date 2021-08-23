@@ -18,7 +18,7 @@ code {
 
 .enter {
   transition:  height 300ms;
-
+  max-height: calc(80vh-10rem);
 }
 
 .enterFrom {
@@ -26,7 +26,7 @@ code {
 }
 
 .enterTo {
-  height: 50%;
+  height: 100%;
 }
 
 .leave {
