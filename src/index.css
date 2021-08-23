@@ -15,3 +15,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.enter {
+  transition:  height 300ms;
+}
+
+.enterFrom {
+  height:0px;
+}
+
+.enterTo {
+  height: 100%;
+}
+
+.leave {
+  transition: height 300ms;
+ }
+
+.leaveFrom {
+  height: 100px;
+}
+
+.leaveTo {
+  height: 0px;
+}

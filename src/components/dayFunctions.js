@@ -65,7 +65,7 @@ const day18p1Runner = (input) => {
     }
     for (let i = startIndexes.length - 1; i >= 0; i--) {
         day18p1Runner(input.slice(startIndexes[i], endIndexes[i]))
-        arrOut.push.apply(arrOut.slice(startIndexes[i - 1]]))
+        arrOut.push.apply(arrOut,arrOut.slice(0,startIndexes[i - 1]))
         console.log(startIndexes[i], endIndexes[i])
         console.log(input.slice(startIndexes[i], endIndexes[i]))
     }

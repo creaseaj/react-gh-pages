@@ -70,6 +70,14 @@ const AocApp = () => {
         setSolution(null)
         setInput('1 + (2 * 3) + (4 * (5 + 6))')
     }, [selectedDay])
+    const classNames = {
+        enter: "enter",
+        enterFrom: "enterFrom",
+        enterTo: "enterTo",
+        leave: "leave",
+        leaveFrom: "leaveFrom",
+        leaveTo: "leaveTo"
+      };
     return (
         <div className=" w-screen h-[calc(100vh-4rem)] sm:h-screen flex items-center sm:-mt-16">
             {showSelectedDay ? (
@@ -102,12 +110,7 @@ const AocApp = () => {
                     <Transition
                         className="z-30 absolute right-4 bottom-4 max-h-[calc(80vh-2rem)] overflow-x-hidden overflow-y-auto border-[2px] scrollbar-hide border-gray-700 rounded-xl w-72"
                         show={showSelectedDay}
-                        enter="transition-opacity duration-75"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="transition-opacity duration-150"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
+                        {...classNames}
                     >
                         <ShowList setShowSelectedDay={setShowSelectedDay} setSelectedDay={setSelectedDay} />
                     </Transition>
