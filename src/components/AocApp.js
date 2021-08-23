@@ -69,7 +69,7 @@ const AocApp = () => {
     let changeDayButton = useRef(null)
     useEffect(() => {
         setSolution(null)
-        setInput('1 + (2 * 3) + (4 * (5 + 6))')
+        setInput(AocTestCode[selectedDay])
     }, [selectedDay])
     const classNames = {
         enter: "enter",
@@ -79,7 +79,6 @@ const AocApp = () => {
         leaveFrom: "leaveFrom",
         leaveTo: "leaveTo"
     };
-    console.log(showSelectedDay)
     return (
         <div className=" w-screen h-[calc(100vh-4rem)] sm:h-screen flex items-center sm:-mt-16">
             {showSelectedDay ? (
@@ -113,12 +112,14 @@ const AocApp = () => {
 
                     </div>
                     <motion.div
-                        className={`bg-gray-200 z-20 absolute right-[10px] bottom-[10px] max-h-[calc(80vh-2rem)] overflow-x-hidden overflow-y-auto scrollbar-hide border-[2px] border-gray-700 rounded-xl  ${showSelectedDay ? ' pb-[40px]' : 'invisible'}`}
+                        className={`bg-gray-200 z-20 absolute right-[10px] bottom-[10px] max-h-[calc(80vh-2rem)] overflow-x-hidden overflow-y-auto scrollbar-hide border-[2px] border-gray-700 rounded-md  ${showSelectedDay ? ' pb-[40px]' : null}`}
                         style={{ width: changeDayButton.current?.offsetWidth ?? 400 }}
                         animate={{
                             height: !showSelectedDay ? 40 : "auto"
 
                         }}
+                        transition={{ type: "tween", duration: 0.3 }}
+
                     >
                         <ShowList setShowSelectedDay={setShowSelectedDay} setSelectedDay={setSelectedDay} />
                     </motion.div>
