@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import dayFunctions, { day18p1, day1p1, day1p2 } from './dayFunctions';
+import dayFunctions, { day18p1, day18p2, day1p1, day1p2 } from './dayFunctions';
 import AocTestCode from './AocTestCode';
 import Button from './Button';
 import { motion } from "framer-motion"
@@ -49,7 +49,7 @@ const Days = [
     null,
     null,
     null,
-    new Day('https://adventofcode.com/2020/day/18', day18p1, null),
+    new Day('https://adventofcode.com/2020/day/18', day18p1, day18p2),
     null,
     null,
     null,
@@ -69,7 +69,7 @@ const AocApp = () => {
     let changeDayButton = useRef(null)
     useEffect(() => {
         setSolution(null)
-        setInput(AocTestCode[selectedDay])
+        setInput('1 + 2 * 3 + 4 * 5 + 6')
     }, [selectedDay])
     const classNames = {
         enter: "enter",
