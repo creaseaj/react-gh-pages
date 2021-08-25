@@ -47,7 +47,6 @@ const day18p2 = (input) => {
 }
 
 const day18p2SolveBrackets = (input) => {
-    console.log(input)
     let arrOut = []
     let depth = 0;
     let startIndexes = []
@@ -70,7 +69,7 @@ const day18p2SolveBrackets = (input) => {
     if (startIndexes.length > 0) {
         arrOut.push.apply(arrOut, input.slice(0, startIndexes[0] - 1))
         for (let i = 0; i < startIndexes.length; i++) {
-            arrOut.push(day18p1Runner(input.slice(startIndexes[i], endIndexes[i])))
+            arrOut.push(day18p2SolveBrackets(input.slice(startIndexes[i], endIndexes[i])))
             arrOut.push.apply(arrOut, input.slice(endIndexes[i] + 1, startIndexes[i + 1] - 1))
         }
         arrOut.push.apply(arrOut, input.slice(endIndexes[endIndexes.length - 1] + 1, input.length))
@@ -85,34 +84,20 @@ const day18p2SolveBrackets = (input) => {
 
     // use copyOut and will be brackets free
     copyOut = day18p2SolveAdd(copyOut)
-    console.log('final added', copyOut)
     copyOut = day18p2SolveMultiply(copyOut)
     return copyOut
 
 }
 const day18p2SolveAdd = (input) => {
-    console.log('adding', input)
-    let arrOut = []
     let lastAdd = 0
     input.forEach((character, index) => {
-        if(character === '+') {
-            input[index + 1] = solve(input.slice(index -1, index + 1))
+        if(character === '+') { 
+            input[index + 1] = solve(input.slice(index -1, index + 2))
+            input.splice(index  - 1, 1,1)
+            input.splice(index, 1,'*')
         }
     })
-    for (let i = 0; i < input.length - 2; i++) {
-        if (input[i + 1] === '+') {
-            console.log('nextiter', input)
-            arrOut.push.apply(arrOut, input.slice(lastAdd, i))
-            arrOut.push(solve(input.slice(i, i + 3)))
-            input[i + 2] = solve(input.slice(i, i + 3))
-            lastAdd = i + 3
-        } else if (input[i + 1] === '*') {
-
-        }
-    }
-    arrOut.push.apply(arrOut, input.slice(lastAdd, input.length))
-
-    return arrOut
+    return input
 }
 
 
@@ -122,9 +107,7 @@ const day18p2SolveMultiply = (input) => {
     if (input.length > 3) {
         arrOut.push.apply(arrOut, input.slice(3, input.length))
     } else {
-        console.log('arrOut', arrOut)
         return arrOut
-
     }
     return day18p2SolveMultiply(arrOut)
 

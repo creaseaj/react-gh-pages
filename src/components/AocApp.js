@@ -69,7 +69,7 @@ const AocApp = () => {
     let changeDayButton = useRef(null)
     useEffect(() => {
         setSolution(null)
-        setInput('1 + 2 * 3 + 4 * 5 + 6')
+        setInput(AocTestCode[selectedDay])
     }, [selectedDay])
     const classNames = {
         enter: "enter",
