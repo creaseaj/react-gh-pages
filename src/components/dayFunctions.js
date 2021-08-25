@@ -37,6 +37,81 @@ const day18p1 = (input) => {
     return runningTotal
 }
 
+const day18p2 = (input) => {
+    input = input.split('\n')
+    var runningTotal = 0
+    for (var i = 0; i < input.length; i++) {
+        runningTotal += parseInt(day18p2SolveBrackets(day18p1LineProcessor(input[i])))
+    }
+    return runningTotal
+}
+
+const day18p2SolveBrackets = (input) => {
+    let arrOut = []
+    let depth = 0;
+    let startIndexes = []
+    let endIndexes = []
+    input.forEach((char, index) => {
+        if (char === '(') {
+            depth++;
+            if (depth === 1) {
+                startIndexes.push(index + 1)
+            }
+        }
+        else if (char === ')') {
+            depth--;
+            if (depth === 0) {
+                endIndexes.push(index)
+            }
+        }
+    })
+    // Found location of brackets, now I need to solve the brackets and put the line back together
+    if (startIndexes.length > 0) {
+        arrOut.push.apply(arrOut, input.slice(0, startIndexes[0] - 1))
+        for (let i = 0; i < startIndexes.length; i++) {
+            arrOut.push(day18p2SolveBrackets(input.slice(startIndexes[i], endIndexes[i])))
+            arrOut.push.apply(arrOut, input.slice(endIndexes[i] + 1, startIndexes[i + 1] - 1))
+        }
+        arrOut.push.apply(arrOut, input.slice(endIndexes[endIndexes.length - 1] + 1, input.length))
+    }
+    let copyOut = []
+    if (arrOut.length === 0) {
+        copyOut = input
+    } else {
+        copyOut = arrOut
+    }
+    arrOut = []
+
+    // use copyOut and will be brackets free
+    copyOut = day18p2SolveAdd(copyOut)
+    copyOut = day18p2SolveMultiply(copyOut)
+    return copyOut
+
+}
+const day18p2SolveAdd = (input) => {
+    let lastAdd = 0
+    input.forEach((character, index) => {
+        if(character === '+') { 
+            input[index + 1] = solve(input.slice(index -1, index + 2))
+            input.splice(index  - 1, 1,1)
+            input.splice(index, 1,'*')
+        }
+    })
+    return input
+}
+
+
+const day18p2SolveMultiply = (input) => {
+    let arrOut = []
+    arrOut.push(String(solve(input.slice(0, 3))))
+    if (input.length > 3) {
+        arrOut.push.apply(arrOut, input.slice(3, input.length))
+    } else {
+        return arrOut
+    }
+    return day18p2SolveMultiply(arrOut)
+
+}
 const day18p1Runner = (input) => {
     // find and solve brackets
     let arrOut = []
@@ -106,5 +181,6 @@ const day18p1LineProcessor = (input) => {
 export {
     day1p1,
     day1p2,
-    day18p1
+    day18p1,
+    day18p2
 }
