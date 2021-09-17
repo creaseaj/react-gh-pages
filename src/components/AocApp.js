@@ -74,10 +74,10 @@ const AocApp = () => {
     return (
         <div className=" w-screen h-[calc(100vh-4rem)] sm:h-screen flex items-center sm:-mt-16">
             {showSelectedDay ? (
-                <div className=" z-10 absolute right-0 bottom-0 top-0 left-0" onClick={() => setShowSelectedDay(!showSelectedDay)} />
+                <div className="absolute top-0 bottom-0 left-0 right-0 z-10 " onClick={() => setShowSelectedDay(!showSelectedDay)} />
             ) : null}
             <div className="relative flex sm:container sm:mx-auto w-screen h-full sm:h-[80vh] bg-gray-200 sm:rounded-xl p-[10px] flex-col justify-between gap-[10px]">
-                <div className="w-full flex justify-between text-lg">
+                <div className="flex justify-between w-full text-lg">
                     {selectedDay == null ?
                         (
                             <p className="font-semibold">Select a day to get started</p>
@@ -89,7 +89,7 @@ const AocApp = () => {
                         )
                     }
                 </div>
-                <div className="h-full w-full">
+                <div className="w-full h-full">
                     <textarea className="w-full h-full resize-none rounded-lg focus:outline-none p-[10px] focus:border-2 focus:border-gray-700"
                         onChange={(input) => setInput(input.target.value)}
                         value={input}
