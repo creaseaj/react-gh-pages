@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import dayFunctions, { day18p1, day18p2, day1p1, day1p2 } from './dayFunctions';
+import { day18p1, day18p2, day1p1, day1p2 } from './dayFunctions';
 import AocTestCode from './AocTestCode';
 import Button from './Button';
 import { motion } from "framer-motion"
@@ -71,14 +71,6 @@ const AocApp = () => {
         setSolution(null)
         setInput(AocTestCode[selectedDay])
     }, [selectedDay])
-    const classNames = {
-        enter: "enter",
-        enterFrom: "enterFrom",
-        enterTo: "enterTo",
-        leave: "leave",
-        leaveFrom: "leaveFrom",
-        leaveTo: "leaveTo"
-    };
     return (
         <div className=" w-screen h-[calc(100vh-4rem)] sm:h-screen flex items-center sm:-mt-16">
             {showSelectedDay ? (
