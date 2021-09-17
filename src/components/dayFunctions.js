@@ -89,7 +89,6 @@ const day18p2SolveBrackets = (input) => {
 
 }
 const day18p2SolveAdd = (input) => {
-    let lastAdd = 0
     input.forEach((character, index) => {
         if(character === '+') { 
             input[index + 1] = solve(input.slice(index -1, index + 2))
