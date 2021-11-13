@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 
 const ShowList = (props) => {
     let output = [];
-    Days.forEach((day, i) => {
+    Days[props.year].forEach((day, i) => {
         output.push(
             <div
                 className={`${day === null ? 'bg-gray-200' : ' bg-gray-100 hover:bg-gray-700 hover:text-white'} ${i !== 24 ? 'border-b' : null} text-lg  mx-[-2px]  cursor-pointer  border-gray-700 ${i === 0 ? 'rounded-t-xl mt-[-2px]' : i === 24 ? 'rounded-b-xl mb-[-2px]' : null}`} id={i + 1} key={i + 1}
@@ -31,39 +31,69 @@ class Day {
     }
 }
 
-const Days = [
-    new Day('https://adventofcode.com/2020/day/1', day1p1, day1p2),
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    new Day('https://adventofcode.com/2020/day/18', day18p1, day18p2),
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
-]
+const Days = {
+    2020: [
+        new Day('https://adventofcode.com/2020/day/1', day1p1, day1p2),
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        new Day('https://adventofcode.com/2020/day/18', day18p1, day18p2),
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    2021: [
+        new Day('https://adventofcode.com/2020/day/1', day1p1, day1p2),
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ]
+
+}
 
 
 
-const AocApp = () => {
+const AocApp = ({ year }) => {
     const [showSelectedDay, setShowSelectedDay] = useState(false)
-    const [selectedDay, setSelectedDay] = useState(18)
+    const [selectedDay, setSelectedDay] = useState(1)
     const [solution, setSolution] = useState(null)
     const [input, setInput] = useState('')
     let changeDayButton = useRef(null)
@@ -71,12 +101,16 @@ const AocApp = () => {
         setSolution(null)
         setInput(AocTestCode[selectedDay])
     }, [selectedDay])
+
+    useEffect(() => {
+        setSelectedDay(1);
+    }, [year])
     return (
         <div className=" w-screen h-[calc(100vh-4rem)] sm:h-screen flex items-center sm:-mt-16">
             {showSelectedDay ? (
                 <div className="absolute top-0 bottom-0 left-0 right-0 z-10 " onClick={() => setShowSelectedDay(!showSelectedDay)} />
             ) : null}
-            <div className="relative flex sm:container sm:mx-auto w-screen h-full sm:h-[80vh] bg-gray-200 sm:rounded-xl p-[10px] flex-col justify-between gap-[10px]">
+            <div className={"relative flex sm:container sm:mx-auto w-screen h-full sm:h-[80vh]  sm:rounded-xl p-[10px] flex-col justify-between gap-[10px] z-10 transition-all border-2 " + (year === 2021 ? 'bg-yellow-100 border-gray-900 ' : 'bg-gray-200 border-transparent')}>
                 <div className="flex justify-between w-full text-lg">
                     {selectedDay == null ?
                         (
@@ -90,15 +124,15 @@ const AocApp = () => {
                     }
                 </div>
                 <div className="w-full h-full">
-                    <textarea className="w-full h-full resize-none rounded-lg focus:outline-none p-[10px] focus:border-2 focus:border-gray-700"
+                    <textarea className="w-full h-full resize-none rounded-lg focus:outline-none p-[10px] border-2 border-transparent focus:border-gray-700 overflow-hidden"
                         onChange={(input) => setInput(input.target.value)}
                         value={input}
                     />
                 </div>
 
                 <div className="w-full  justify-between justify-self-end self-end flex flex-col sm:flex-row gap-[10px] sm:gap-[50px]">
-                    <Button function={() => setSolution(Days[selectedDay - 1].solution1(input))} value="Part 1" />
-                    <Button function={() => setSolution(Days[selectedDay - 1].solution2(input))} value="Part 2" disabled={Days[selectedDay - 1].solution2 == null} />
+                    <Button function={() => setSolution(Days[year][selectedDay - 1].solution1(input))} value="Part 1" />
+                    <Button function={() => setSolution(Days[year][selectedDay - 1].solution2(input))} value="Part 2" disabled={Days[year][selectedDay - 1].solution2 == null} />
                     <div ref={changeDayButton} className="z-30 w-full">
                         <Button id="dayPick" function={() => setShowSelectedDay(!showSelectedDay)} value='Change Day' />
 
@@ -106,6 +140,9 @@ const AocApp = () => {
                     <motion.div
                         className={`bg-gray-200 z-20 absolute right-[10px] bottom-[10px] max-h-[calc(80vh-2rem)] overflow-x-hidden overflow-y-auto scrollbar-hide border-[2px] border-gray-700 rounded-md  ${showSelectedDay ? ' pb-[40px]' : null}`}
                         style={{ width: changeDayButton.current?.offsetWidth ?? 400 }}
+                        initial={{
+                            height: 40
+                        }}
                         animate={{
                             height: !showSelectedDay ? 40 : "auto"
 
@@ -113,7 +150,7 @@ const AocApp = () => {
                         transition={{ type: "tween", duration: 0.3 }}
 
                     >
-                        <ShowList setShowSelectedDay={setShowSelectedDay} setSelectedDay={setSelectedDay} />
+                        <ShowList setShowSelectedDay={setShowSelectedDay} setSelectedDay={setSelectedDay} year={year} />
                     </motion.div>
 
                     {/* <Transition
