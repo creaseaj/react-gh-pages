@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-
-const Header = () => {
+const Header = ({ setYear, year }) => {
     const [isOpen, setIsOpen] = useState(false)
+    const [showSelectedDay, setShowSelectedDay] = useState(false)
     return (
-        <nav className="z-10 bg-gray-800">
+        <nav className={"z-10 transition-all " + (year === 2021 ? 'bg-transparent' : 'bg-gray-800')}>
             <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div className="relative flex items-center justify-between h-16">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -19,17 +19,22 @@ const Header = () => {
                             </svg>
                         </button>
                     </div>
-                    <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
-                        <div className="flex items-center flex-shrink-0">
-                            <p className="text-2xl text-white ">creaseaj</p >
+                    <div className={"flex items-center justify-center flex-1 sm:items-stretch sm:justify-start " + (year === 2021 ? 'text-red-300' : 'text-white')}>
+                        <div className="flex items-center flex-shrink-0 ">
+                            <p className="text-2xl  ">creaseaj</p >
                         </div>
                         <div className="hidden sm:block sm:ml-6">
-                            <div className="flex space-x-4">
-                                <a href="/" className="px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md" aria-current="page">Dashboard</a>
+                            <div className="flex space-x-4 items-center">
+                                <p className="text-2xl  w-max">advent of code</p>
+                                <div className="relative flex">
+                                    <p className={"text-2xl  transition-all  border-transparent border-2 rounded-md px-2 hover:border-gray-800  hover:text-gray-800 cursor-pointer " + (year === 2021 ? "bg-transparent" : "bg-gray-800 hover:bg-gray-300")} onClick={() => setShowSelectedDay(!showSelectedDay)}>{year} </p>
 
-                                <a href="/" className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Advent Of Code</a>
+                                    <div className={"z-10 absolute bg-gray-300 p-3 rounded-md w-full overflow-hidden " + (showSelectedDay ? 'block' : 'hidden')} >
+                                        <div onClick={() => { setShowSelectedDay(false); setYear(2021); }}>2021</div>
+                                        <div onClick={() => { setShowSelectedDay(false); setYear(2020); }}>2020</div>
+                                    </div>
+                                </div>
 
-                                <a href="/" className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Projects</a>
                             </div>
                         </div>
                     </div>
