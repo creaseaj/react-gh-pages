@@ -110,7 +110,7 @@ const AocApp = ({ year }) => {
             {showSelectedDay ? (
                 <div className="absolute top-0 bottom-0 left-0 right-0 z-10 " onClick={() => setShowSelectedDay(!showSelectedDay)} />
             ) : null}
-            <div className={"relative flex sm:container sm:mx-auto w-screen h-full sm:h-[80vh]  sm:rounded-xl p-[10px] flex-col justify-between gap-[10px] z-10 transition-all border-2 " + (year === 2021 ? 'bg-yellow-100 border-gray-900 ' : 'bg-gray-200 border-transparent')}>
+            <div className={"relative flex sm:container sm:mx-auto w-screen max-w-7xl h-full sm:h-[80vh]  sm:rounded-xl p-[10px] m-4 flex-col justify-between gap-[10px] z-10 transition-all border-2 " + (year === 2021 ? 'bg-yellow-100 border-gray-900 ' : 'bg-gray-200 border-transparent')}>
                 <div className="flex justify-between w-full text-lg">
                     {selectedDay == null ?
                         (
