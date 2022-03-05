@@ -3,7 +3,7 @@ const Header = ({ setYear, year }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [showSelectedDay, setShowSelectedDay] = useState(false)
     return (
-        <nav className={"z-10 transition-all " + (year === 2021 ? 'bg-transparent' : 'bg-gray-800')}>
+        <nav className={"z-20 transition-all " + (year === 2021 ? 'bg-transparent' : 'bg-gray-800')}>
             <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div className="relative flex items-center justify-between h-16">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
