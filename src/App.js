@@ -1,10 +1,16 @@
+import { useEffect } from "react";
 import Typical from "./components/Typical";
 
 function App() {
   const toRotate = ["Web Developer", 4000, "Cyber Security Student", 4000, "Full Stack Software Engineer", 4000];
-
+  useEffect(() => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }, [])
   return (
-    <div className="bg-slate-800 w-full h-screen flex justify-center items-center relative">
+    <div
+      className="absolute inset-0 w-full flex justify-center items-center relative"
+      style={{ height: "calc(var(--vh, 1vh) * 100)" }}>
       <div className="flex-col flex justify-center items-center">
         <div className='text-white text-2xl'>
           Hi, I'm <span className="text-red-500">Adam</span>
